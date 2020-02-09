@@ -1,10 +1,13 @@
 package com.learning.niit_project.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 public class FacultyModel {
+
 
 	@Id
 	private int facultyId;
@@ -50,7 +53,18 @@ public class FacultyModel {
 	public void setFacultyContact(long facultyContact) {
 		this.facultyContact = facultyContact;
 	}
+	public String getFacultyPwd() {
+		return facultyPwd;
+	}
+	public void setFacultyPwd(String facultyPwd) {
+		this.facultyPwd = facultyPwd;
+	}
 
-	
+	@Override
+	public String toString() {
+		return "FacultyModel [facultyId=" + facultyId + ", facultyName=" + facultyName + ", facultyPwd=" + facultyPwd
+				+ ", courseName=" + courseName + ", batchName=" + batchName + ", facultyEmail=" + facultyEmail
+				+ ", facultyContact=" + facultyContact + "]";
+	}
 	
 }
