@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>Generate QR</title>
-<meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -19,23 +19,23 @@
 			<form action="generate_qr" method="Post">
 				<div class="form-group">
 					<label for="InputFacultyName">Faculty Name</label> <input
-						type="text" disabled="disabled" value="<%=session.getAttribute("facultyName") %>" class="form-control"
-						id="InputFacultyName">
+						type="text" readonly="readonly" value="<%=session.getAttribute("facultyName") %>" class="form-control"
+						id="facultyName" name="facultyName">
 				</div>
 
 				<div class="form-group">
 					<label for="InputCourseName">Course</label> <input type="text"
-						class="form-control" placeholder="Enter course name" id="InputCourseName">
+						class="form-control" placeholder="Enter course name" name="CourseName" id="CourseName">
 				</div>
 
 				<div class="form-group">
 					<label for="InputBatchName">Batch</label> <input type="text"
-						class="form-control" placeholder="Current batch code" id="InputBatchName">
+						class="form-control" placeholder="Current batch code" name="BatchCode" id="BatchCode">
 				</div>
 				
 				<div class="form-group">
 					<label for="InputDateTime">Date</label> <input
-						type="text" class="form-control" disabled="disabled" value="<%= new java.util.Date().toLocaleString() %>" id="InputDateTime">
+						type="text" class="form-control" readonly="readonly" name="currentDateTime" value="<%= new java.util.Date().toLocaleString() %>" id="currentDateTime">
 				</div>
 				<button type="submit" class="btn btn-outline-primary">Generate QR</button>
 				<button type="reset" class="btn btn-outline-warning">Cancel</button>
