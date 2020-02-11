@@ -1,7 +1,14 @@
 package com.learning.niit_project.controllers;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Optional;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,18 +24,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.learning.niit_project.models.FacultyModel;
 import com.learning.niit_project.models.QR_Details;
 import com.learning.niit_project.services.IFacultyDAO;
+import com.learning.niit_project.services.I_QRdao;
 
 @Controller
 public class FacultyController {
 
 	@Autowired
 	IFacultyDAO iFacultyDAO;
+	I_QRdao iQRdao;
 	
 	@RequestMapping("/")
 	public String index() {
@@ -57,17 +73,53 @@ public class FacultyController {
 			return "index";	
 	}
 
+	@ResponseBody
 	@PostMapping(path="/generate_qr")
 	public ModelAndView generateQR(QR_Details qr_Details) {
 		ModelAndView view=new ModelAndView("generate-qr");
-		String imgPath=createQR(qr_Details);
+		try {
+			String imgPath=createQR(qr_Details);
+			view.addObject("imgSrc", imgPath);
+			//iQRdao.save(qr_Details);
+		} catch (WriterException | IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error: "+e.getMessage());
+		}
 		//System.out.println(qr_Details);
 		return view;
 	}
 
-	private String createQR(QR_Details qr_Details) {
-		// TODO Auto-generated method stub
-		return null;
+	private String createQR(QR_Details qr_Details) throws WriterException, IOException {
+		
+		String fileType="jpg";
+		String filePath = "src/main/QR-images/AttendanceQR.jpg";
+		File qrFile = new File(filePath);
+		Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
+		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+		QRCodeWriter qrCodeWriter = new QRCodeWriter();
+		int size=125;
+		BitMatrix byteMatrix = qrCodeWriter.encode(qr_Details.toString(), BarcodeFormat.QR_CODE, size, size, hintMap);
+		// Make the BufferedImage that are to hold the QRCode
+		int matrixWidth = byteMatrix.getWidth();
+		BufferedImage image = new BufferedImage(matrixWidth, matrixWidth, BufferedImage.TYPE_INT_RGB);
+		image.createGraphics();
+
+		Graphics2D graphics = (Graphics2D) image.getGraphics();
+		graphics.setColor(Color.WHITE);
+		graphics.fillRect(0, 0, matrixWidth, matrixWidth);
+		// Paint and save the image using the ByteMatrix
+		graphics.setColor(Color.BLACK);
+
+		for (int i = 0; i < matrixWidth; i++) {
+			for (int j = 0; j < matrixWidth; j++) {
+				if (byteMatrix.get(i, j)) {
+					graphics.fillRect(i, j, 1, 1);
+				}
+			}
+		}
+		ImageIO.write(image, fileType, qrFile);
+		System.out.println(qrFile.toString());
+		return qrFile.toString();
 	}
 
 }

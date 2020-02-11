@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +14,7 @@
 <div class="container">
 <hr/>
 	<div class="col-md-4 offset-md-4">
-		<!-- <img src="src/main/QR-images/AttendanceQR.png" width="125" height="125"/> -->
-		<img alt="" src="AttendanceQR.jpg">
+	
 	</div>
 </div>
 <script

@@ -14,12 +14,12 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4 offset-md-4" align="center">
+			<div class="col-md-4 offset-md-4">
 			<br/><br/>
 				<form action="login" method="post">
 					<div class="form-group">
-						<label for="email">Email address:</label> <input type="email"
-							class="form-control" placeholder="Enter email" name="email">
+						<label for="facultyId">Faculty ID:</label> <input type="text"
+							class="form-control" placeholder="Enter email" id="facultyId" name="facultyId"">
 					</div>
 					<div class="form-group">
 						<label for="pwd">Password:</label> <input type="password"
