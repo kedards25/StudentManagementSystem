@@ -5,8 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +23,7 @@ import javax.xml.ws.FaultAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,64 +47,77 @@ import com.learning.niit_project.services.IFacultyDAO;
 import com.learning.niit_project.services.I_QRdao;
 
 @Controller
-public class FacultyController {
+public class FacultyController  {
 
 	@Autowired
 	IFacultyDAO iFacultyDAO;
 	I_QRdao iQRdao;
-	
+
 	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}
 
 	@RequestMapping("/login")
-	public String index(@RequestParam("facultyId") int facultyId, @RequestParam("pwd") String facultyPass,HttpServletRequest request) {
-		Optional<FacultyModel> model= iFacultyDAO.findById(facultyId);
-		if(model.isPresent())
-		{
-			
-			FacultyModel faculty=model.get();
-			int id=faculty.getFacultyId();
-			String password=faculty.getFacultyPwd();
-			
-			System.out.println(facultyId+" "+facultyPass);
-			if (facultyId==id&&facultyPass.equals(password)) {
-				HttpSession session=request.getSession();
+	public String index(@RequestParam("facultyId") int facultyId, @RequestParam("pwd") String facultyPass,
+			HttpServletRequest request) {
+		Optional<FacultyModel> model = iFacultyDAO.findById(facultyId);
+		if (model.isPresent()) {
+
+			FacultyModel faculty = model.get();
+			int id = faculty.getFacultyId();
+			String password = faculty.getFacultyPwd();
+
+			System.out.println(facultyId + " " + facultyPass);
+			if (facultyId == id && facultyPass.equals(password)) {
+				HttpSession session = request.getSession();
 				session.setAttribute("facultyName", faculty.getFacultyName());
-				return "qr-details"; 
+				return "qr-details";
 			}
-				
+
 		}
 
-			return "index";	
+		return "index";
 	}
 
-	@ResponseBody
-	@PostMapping(path="/generate_qr")
-	public ModelAndView generateQR(QR_Details qr_Details) {
-		ModelAndView view=new ModelAndView("generate-qr");
+	@RequestMapping(path = "/generate_qr")
+	@Scheduled(fixedRate = 5000)
+	public String generateQR(QR_Details qr_Details) {
 		try {
-			String imgPath=createQR(qr_Details);
-			view.addObject("imgSrc", imgPath);
-			//iQRdao.save(qr_Details);
-		} catch (WriterException | IOException e) {
+			
+			final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+	        ses.scheduleWithFixedDelay(new Runnable() {
+	            @Override
+	            public void run() {
+	                try {
+	                	qr_Details.setCurrentDateTime(new java.util.Date());
+						createQR(qr_Details);
+					} catch (WriterException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            }
+	        }, 0, 4, TimeUnit.SECONDS);
+			
+			 //iQRdao.save(qr_Details);
+		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error: "+e.getMessage());
+			System.out.println("Error: " + e);
 		}
-		//System.out.println(qr_Details);
-		return view;
+		return "generate-qr";
 	}
 
-	private String createQR(QR_Details qr_Details) throws WriterException, IOException {
-		
-		String fileType="jpg";
-		String filePath = "src/main/QR-images/AttendanceQR.jpg";
+
+	
+	private void createQR(QR_Details qr_Details) throws WriterException, IOException {
+
+		String fileType = "jpg";
+		String filePath = "src/main/webapp/faculty/QR-images/AttendanceQR.jpg";
 		File qrFile = new File(filePath);
 		Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
 		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		int size=125;
+		int size = 125;
 		BitMatrix byteMatrix = qrCodeWriter.encode(qr_Details.toString(), BarcodeFormat.QR_CODE, size, size, hintMap);
 		// Make the BufferedImage that are to hold the QRCode
 		int matrixWidth = byteMatrix.getWidth();
@@ -118,8 +138,7 @@ public class FacultyController {
 			}
 		}
 		ImageIO.write(image, fileType, qrFile);
-		System.out.println(qrFile.toString());
-		return qrFile.toString();
 	}
+
 
 }

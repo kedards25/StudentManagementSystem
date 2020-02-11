@@ -12,7 +12,6 @@ public class BatchDetails {
 	@Id
 	private String batchCode;
 	private String batchName;
-	
 	private String faculty;
 	private String batchStartDate;
 	private String batchEndDate;

@@ -16,16 +16,14 @@ public class QR_Details {
 	private String CourseName;
 	private String BatchCode;
 	private Date currentDateTime;
-	private String imagePath;
-	public QR_Details(int qR_id, String facultyName, String courseName, String batchCode, Date currentDateTime,
-			String imagePath) {
+	
+	public QR_Details(int qR_id, String facultyName, String courseName, String batchCode, Date currentDateTime) {
 		super();
 		QR_id = qR_id;
 		this.facultyName = facultyName;
 		CourseName = courseName;
 		BatchCode = batchCode;
 		this.currentDateTime = currentDateTime;
-		this.imagePath = imagePath;
 	}
 	public QR_Details() {
 		super();
@@ -61,17 +59,10 @@ public class QR_Details {
 	public void setCurrentDateTime(Date currentDateTime) {
 		this.currentDateTime = currentDateTime;
 	}
-	public String getImagePath() {
-		return imagePath;
-	}
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
 	@Override
 	public String toString() {
 		return "QR_Details [QR_id=" + QR_id + ", facultyName=" + facultyName + ", CourseName=" + CourseName
-				+ ", BatchCode=" + BatchCode + ", currentDateTime=" + currentDateTime + ", imagePath=" + imagePath
-				+ "]";
+				+ ", BatchCode=" + BatchCode + ", currentDateTime=" + currentDateTime +"]";
 	}
 	
 	
