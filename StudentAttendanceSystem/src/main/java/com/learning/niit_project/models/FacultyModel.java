@@ -28,6 +28,13 @@ public class FacultyModel {
 		this.facultyEmail = facultyEmail;
 		this.facultyContact = facultyContact;
 	}
+	
+	public FacultyModel() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
 	public int getFacultyId() {
 		return facultyId;
 	}
