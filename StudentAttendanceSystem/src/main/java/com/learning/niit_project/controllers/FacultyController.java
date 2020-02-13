@@ -25,6 +25,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,8 +54,17 @@ public class FacultyController  {
 	IFacultyDAO iFacultyDAO;
 	I_QRdao iQRdao;
 
+	@PostMapping("/RegisterFaculty")
+	public String regFac()
+	{
+		FacultyModel model=new FacultyModel(101, "Kedar Devrukhkar", "Pass@1232", "FSSE", "TDD", "niit.kedar@gmail.com", 8828097172L);
+		iFacultyDAO.save(model);
+		return "Faculty";
+		
+	}
+	
 	@RequestMapping("/")
-	public String index() {
+	public String index() {	 
 		return "index";
 	}
 
@@ -64,16 +74,14 @@ public class FacultyController  {
 		Optional<FacultyModel> model = iFacultyDAO.findById(facultyId);
 		if (model.isPresent()) {
 
-			facultyId=101;
-			facultyPass="Pass@123";
-//			FacultyModel faculty = model.get();
-//			int id = faculty.getFacultyId();
-//			String password = faculty.getFacultyPwd();
-//
-//			System.out.println(facultyId + " " + facultyPass);
-			if (facultyId == 101 && facultyPass.equals("Pass@123")) {
+			FacultyModel faculty = model.get();
+			int id = faculty.getFacultyId();
+			String password = faculty.getFacultyPwd();
+
+			System.out.println(facultyId + " " + facultyPass);
+			if (facultyId == id && facultyPass.equals(password)) {
 				HttpSession session = request.getSession();
-				session.setAttribute("facultyName", "Kedar");
+				session.setAttribute("facultyName", faculty.getFacultyName());
 				return "qr-details";
 			}
 
@@ -152,5 +160,6 @@ public class FacultyController  {
 		ImageIO.write(image, fileType, qrFile);
 	}
 
+	
 
 }

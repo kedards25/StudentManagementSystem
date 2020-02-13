@@ -17,6 +17,17 @@ public class FacultyModel {
 	private String batchName;
 	private String facultyEmail;
 	private long facultyContact;
+	public FacultyModel(int facultyId, String facultyName, String facultyPwd, String courseName, String batchName,
+			String facultyEmail, long facultyContact) {
+		super();
+		this.facultyId = facultyId;
+		this.facultyName = facultyName;
+		this.facultyPwd = facultyPwd;
+		this.courseName = courseName;
+		this.batchName = batchName;
+		this.facultyEmail = facultyEmail;
+		this.facultyContact = facultyContact;
+	}
 	public int getFacultyId() {
 		return facultyId;
 	}
