@@ -59,7 +59,7 @@ public class FacultyController  {
 	{
 		FacultyModel model=new FacultyModel(101, "Kedar Devrukhkar", "Pass@1232", "FSSE", "TDD", "niit.kedar@gmail.com", 8828097172L);
 		iFacultyDAO.save(model);
-		return "Faculty";
+		return "faculty-reg";
 		
 	}
 	
