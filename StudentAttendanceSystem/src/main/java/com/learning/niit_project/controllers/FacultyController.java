@@ -81,23 +81,33 @@ public class FacultyController  {
 	}
 
 	@RequestMapping(path = "/generate_qr")
-	@Scheduled(fixedRate = 5000)
 	public String generateQR(QR_Details qr_Details) {
 		try {
 			
 			final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-	        ses.scheduleWithFixedDelay(new Runnable() {
+	        ses.scheduleAtFixedRate(new Runnable() {
 	            @Override
 	            public void run() {
 	                try {
 	                	qr_Details.setCurrentDateTime(new java.util.Date());
+	                	
+	                	String nm=qr_Details.getFacultyName();
+	                	String crse=qr_Details.getCourseName();
+	                	String bat=qr_Details.getBatchCode();
+	                	Date currDt=qr_Details.getCurrentDateTime();
+	                	
+	                	System.out.println(nm);
+	                	System.out.println(crse);
+	                	System.out.println(bat);
+	                	System.out.println(currDt);
 						createQR(qr_Details);
+						
 					} catch (WriterException | IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 	            }
-	        }, 0, 4, TimeUnit.SECONDS);
+	        }, 0, 1 , TimeUnit.SECONDS);
 			
 			 //iQRdao.save(qr_Details);
 		} catch (NullPointerException e) {

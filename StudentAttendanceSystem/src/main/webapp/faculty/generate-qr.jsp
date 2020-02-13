@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="refresh" content="5"> 
+<meta http-equiv="refresh" content="10"> 
 <meta charset="ISO-8859-1">
 <title>Generate QR</title>
 <link rel="stylesheet"

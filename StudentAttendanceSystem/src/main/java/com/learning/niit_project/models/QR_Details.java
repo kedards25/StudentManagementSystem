@@ -17,9 +17,8 @@ public class QR_Details {
 	private String BatchCode;
 	private Date currentDateTime;
 	
-	public QR_Details(int qR_id, String facultyName, String courseName, String batchCode, Date currentDateTime) {
+	public QR_Details(String facultyName, String courseName, String batchCode, Date currentDateTime) {
 		super();
-		QR_id = qR_id;
 		this.facultyName = facultyName;
 		CourseName = courseName;
 		BatchCode = batchCode;
