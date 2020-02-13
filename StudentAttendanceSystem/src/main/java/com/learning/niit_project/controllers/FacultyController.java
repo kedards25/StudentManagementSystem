@@ -54,7 +54,7 @@ public class FacultyController  {
 	IFacultyDAO iFacultyDAO;
 	I_QRdao iQRdao;
 
-	@PostMapping("/RegisterFaculty")
+	@RequestMapping("/RegisterFaculty")
 	public String regFac()
 	{
 		FacultyModel model=new FacultyModel(101, "Kedar Devrukhkar", "Pass@1232", "FSSE", "TDD", "niit.kedar@gmail.com", 8828097172L);
