@@ -18,6 +18,9 @@
 		<div class="col-md-4 offset-md-4">
 			<img src="faculty/QR-images/AttendanceQR.jpg" width="300"
 				height="300" />
+				<div class="ml-5">
+				<button class="btn btn-outline-primary">Show Attendance</button>
+				</div>
 		</div>
 	</div>
 	<script
