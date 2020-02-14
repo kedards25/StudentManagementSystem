@@ -96,7 +96,7 @@ public class FacultyController  {
 			      @Override
 			      public void run() {
 			    	  qr_Details.setCurrentDateTime(new java.util.Date());
-			    	  System.out.println(qr_Details);
+			    	 // System.out.println(qr_Details);
 			    	  try {
 						createQR(qr_Details);
 					} catch (WriterException e) {
