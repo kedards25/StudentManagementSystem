@@ -110,7 +110,7 @@ public class FacultyController  {
 			    };
 			    Timer timer = new Timer();
 			    long delay = 0;
-			    long intevalPeriod = 5 * 1000; 
+			    long intevalPeriod = 9 * 1000; 
 			    // schedules the task to be run in an interval 
 			    timer.scheduleAtFixedRate(task, delay,
 			                                intevalPeriod);

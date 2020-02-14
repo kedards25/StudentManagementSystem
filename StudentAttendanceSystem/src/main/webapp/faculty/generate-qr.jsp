@@ -11,7 +11,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-	<% response.setHeader("Cache-Control", "no-store"); %>
+	<% response.setHeader("Cache-Control", "no-cache"); %>
 	<jsp:include page="../facultyNav.jsp"></jsp:include>
 	<h2 align="center">Generate QR</h2>
 	<div class="container">
@@ -31,7 +31,7 @@
 		function myFunction() {
 			setInterval(function() {
 				$("img").attr("src","faculty/QR-images/AttendanceQR.jpg");
-			}, 6000);
+			}, 10000);
 		}
 		myFunction();
 	</script>

@@ -7,11 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+
 public class QR_Details {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int QR_id=0;
 	private String facultyName;
 	private String CourseName;
 	private String BatchCode;
@@ -27,12 +24,6 @@ public class QR_Details {
 	public QR_Details() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-	public int getQR_id() {
-		return QR_id;
-	}
-	public void setQR_id(int qR_id) {
-		QR_id = qR_id;
 	}
 	public String getFacultyName() {
 		return facultyName;
@@ -60,7 +51,7 @@ public class QR_Details {
 	}
 	@Override
 	public String toString() {
-		return "QR_Details [QR_id=" + QR_id + ", facultyName=" + facultyName + ", CourseName=" + CourseName
+		return "QR_Details [facultyName=" + facultyName + ", CourseName=" + CourseName
 				+ ", BatchCode=" + BatchCode + ", currentDateTime=" + currentDateTime +"]";
 	}
 	
