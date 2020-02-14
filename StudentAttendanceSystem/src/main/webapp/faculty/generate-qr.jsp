@@ -11,6 +11,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
+	<% response.setHeader("Cache-Control", "no-store"); %>
 	<jsp:include page="../facultyNav.jsp"></jsp:include>
 	<h2 align="center">Generate QR</h2>
 	<div class="container">
