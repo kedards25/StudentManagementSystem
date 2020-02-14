@@ -54,14 +54,14 @@ public class FacultyController  {
 	IFacultyDAO iFacultyDAO;
 	I_QRdao iQRdao;
 
-	@RequestMapping("/RegisterFaculty")
-	public String regFac()
-	{
-		FacultyModel model=new FacultyModel(101, "Kedar Devrukhkar", "Pass@1232", "FSSE", "TDD", "niit.kedar@gmail.com", 8828097172L);
-		iFacultyDAO.save(model);
-		return "faculty-reg";
-		
-	}
+//	@RequestMapping("/RegisterFaculty")
+//	public String regFac()
+//	{
+//		FacultyModel model=new FacultyModel(101, "Kedar Devrukhkar", "Pass@1232", "FSSE", "TDD", "niit.kedar@gmail.com", 8828097172L);
+//		iFacultyDAO.save(model);
+//		return "faculty-reg";
+//		
+//	}
 	
 	@RequestMapping("/")
 	public String index() {	 
@@ -91,40 +91,31 @@ public class FacultyController  {
 	}
 
 	@RequestMapping(path = "/generate_qr")
-	public String generateQR(QR_Details qr_Details) {
-		try {
-			
-			final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-	        ses.scheduleAtFixedRate(new Runnable() {
-	            @Override
-	            public void run() {
-	                try {
-	                	qr_Details.setCurrentDateTime(new java.util.Date());
-	                	
-	                	String nm=qr_Details.getFacultyName();
-	                	String crse=qr_Details.getCourseName();
-	                	String bat=qr_Details.getBatchCode();
-	                	Date currDt=qr_Details.getCurrentDateTime();
-	                	
-	                	System.out.println(nm);
-	                	System.out.println(crse);
-	                	System.out.println(bat);
-	                	System.out.println(currDt);
+	public String generateQR(QR_Details qr_Details,HttpServletRequest request) {
+			 TimerTask task = new TimerTask() {
+			      @Override
+			      public void run() {
+			    	  qr_Details.setCurrentDateTime(new java.util.Date());
+			    	  System.out.println(qr_Details);
+			    	  try {
 						createQR(qr_Details);
-						
-					} catch (WriterException | IOException e) {
+					} catch (WriterException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						System.out.println("WriterException "+e);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						System.out.println("IOException "+e);
 					}
-	            }
-	        }, 0, 1 , TimeUnit.SECONDS);
-			
+			      }
+			    };
+			    Timer timer = new Timer();
+			    long delay = 0;
+			    long intevalPeriod = 5 * 1000; 
+			    // schedules the task to be run in an interval 
+			    timer.scheduleAtFixedRate(task, delay,
+			                                intevalPeriod);
 			 //iQRdao.save(qr_Details);
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Error: " + e);
-		}
-		return "generate-qr";
+			    return "generate-qr";
 	}
 
 
