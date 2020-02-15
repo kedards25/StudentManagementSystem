@@ -61,7 +61,7 @@ public class StudentController {
 		return new ResponseEntity<>(HttpStatus.GONE);
 	}
 
-	@GetMapping(path = "/students/{id}", consumes = { "application/json" })
+	@GetMapping(path = "/students/{id}", consumes = { "application/json" },produces = {"application/json"})
 	public Optional<StudentModel> studentById(@PathVariable("id") int id) {
 		return istdDAO.findById(id);
 	}
