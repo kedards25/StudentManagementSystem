@@ -36,7 +36,6 @@ public class StudentController {
 	}
 
 	@GetMapping(path = "/students", produces = { "application/json" })
-	@ResponseBody
 	public List<StudentModel> getAllUsers() {
 		// List<UserModel> model = iuserDao.findAll();
 		// System.out.println("Details: "+model.size());
@@ -62,7 +61,6 @@ public class StudentController {
 	}
 
 	@GetMapping(path = "/students/{id}", consumes = { "application/json" })
-	@ResponseBody
 	public Optional<StudentModel> studentById(@PathVariable("id") int id) {
 		return istdDAO.findById(id);
 	}
