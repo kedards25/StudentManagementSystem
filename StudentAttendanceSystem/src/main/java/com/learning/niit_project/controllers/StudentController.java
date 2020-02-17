@@ -29,7 +29,7 @@ public class StudentController {
 	@RequestMapping("/RegisterStudent")
 	public String regFac()
 	{
-		StudentModel model=new StudentModel(103, "Balaji", "App Engine");
+		StudentModel model=new StudentModel("Kedar", "8828097172", "niit.kedar@gmail.com", "FSSE", "TDD");
 		istdDAO.save(model);
 		return "faculty-reg";
 		
