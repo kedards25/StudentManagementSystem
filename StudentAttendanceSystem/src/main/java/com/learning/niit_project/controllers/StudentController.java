@@ -54,7 +54,7 @@ public class StudentController {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 
-	@DeleteMapping(path = "/students/{id}", consumes = { "application/json" })
+	@DeleteMapping(path = "/students/{id}")
 	public ResponseEntity deleteDetails(@PathVariable("id") int id) {
 		istdDAO.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.GONE);
