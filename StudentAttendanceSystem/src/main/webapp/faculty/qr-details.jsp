@@ -16,7 +16,7 @@
 	<div class="container">
 	<hr/>
 		<div class="col-md-4 offset-md-4">
-			<form action="generate_qr" method="Post">
+			<form action="/generate_qr" method="Post">
 				<div class="form-group">
 					<label for="InputFacultyName">Faculty Name</label> <input
 						type="text" readonly="readonly" value="<%=session.getAttribute("facultyName") %>" class="form-control"

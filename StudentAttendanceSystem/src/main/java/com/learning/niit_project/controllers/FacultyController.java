@@ -150,7 +150,11 @@ public class FacultyController  {
 		}
 		ImageIO.write(image, fileType, qrFile);
 	}
-
-	
+//
+//	@RequestMapping(path = "/error")
+//	public String showErrPage()
+//	{
+//		return "errorpage";
+//	}
 
 }
